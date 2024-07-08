@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>GetClassAgent</artifactId>
+    <artifactId>KillSomeClass</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -33,8 +33,8 @@
                             <addClasspath>true</addClasspath>
                         </manifest>
                         <manifestEntries>
-                            <Premain-Class>org.example.agentmain.WriteClassFile</Premain-Class>
-                            <Agent-Class>org.example.agentmain.WriteClassFile</Agent-Class>
+                            <Premain-Class>org.example.agentmain.KillSomeClass</Premain-Class>
+                            <Agent-Class>org.example.agentmain.KillSomeClass</Agent-Class>
                             <Can-Redefine-Classes>true</Can-Redefine-Classes>
                             <Can-Retransform-Classes>true</Can-Retransform-Classes>
                         </manifestEntries>
@@ -49,8 +49,8 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Premain-Class>org.example.agentmain.WriteClassFile</Premain-Class>
-                            <Agent-Class>org.example.agentmain.WriteClassFile</Agent-Class>
+                            <Premain-Class>org.example.agentmain.KillSomeClass</Premain-Class>
+                            <Agent-Class>org.example.agentmain.KillSomeClass</Agent-Class>
                             <Can-Redefine-Classes>true</Can-Redefine-Classes>
                             <Can-Retransform-Classes>true</Can-Retransform-Classes>
                         </manifestEntries>

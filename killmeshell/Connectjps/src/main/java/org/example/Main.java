@@ -14,19 +14,22 @@ public class Main {
     public static void main(String[] args) throws IOException, AttachNotSupportedException, AgentLoadException, AgentInitializationException {
         List<VirtualMachineDescriptor> list = VirtualMachine.list();
         if (args.length < 2) {
-            System.out.println("usage: java -cp \"tools.jar;conn.jar\" org.example.Main Agent.jar target");
+            System.out.println("usage: java -cp \"tools.jar;conn.jar\" org.example.Main target Agent.jar");
+            System.out.println("or: java -cp \"tools.jar;conn.jar\" org.example.Main target KillSomeClass.jar EilClassName#Method");
             System.exit(0);
         }
-        for (VirtualMachineDescriptor virtualMachineDescriptor :list) {
-            if (virtualMachineDescriptor.displayName().equals(args[1])) {
+        for (VirtualMachineDescriptor virtualMachineDescriptor : list) {
+            if (virtualMachineDescriptor.displayName().equals(args[0])) {
                 String id = virtualMachineDescriptor.id();
                 VirtualMachine attach = VirtualMachine.attach(id);
-                File file = new File(args[0]);
+                File file = new File(args[1]);
                 if (file.exists()) {
-                    String fileName =  file.getAbsolutePath();
-                    attach.loadAgent(fileName);
+                    String fileName = file.getAbsolutePath();
+                    if (args[2] != null) {
+                        attach.loadAgent(fileName, args[2]);
+                    }
                     attach.detach();
-                }else {
+                } else {
                     System.out.println("Agent.jar not found");
                     System.exit(0);
                 }

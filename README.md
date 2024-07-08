@@ -5,16 +5,18 @@
 核心用法：
 
 ```
-java -cp "tools.jar;conn.jar" org.example.Main Agent.jar target
+java -cp "tools.jar;conn.jar" org.example.Main target Agent.jar
 ```
 
-* `Agent.jar`：您可以选择使用 `GetClassAgent.jar` 或 `JavaAgentKill.jar`。
+* `Agent.jar`：您可以选择使用 `GetClassAgent.jar` 或 `JavaAgentKill.jar` 或 `KillSomeClass.jar`。
 
 * `target`：目标类的全限定类名。可以用 `jps -l` 查看
 
 其中
 
 GetClassAgent.jar 用于获取 Servlet、Filter、Listener、Valve、WebSocket 的类文件，将加载的类文件写到目标 Web 的 result 目录下
+
+KillSomeClass.jar 用于手动清除某个类的某个方法
 
 JavaAgentKill.jar 用于自动清理上述提到的组件的内存马
 
@@ -28,6 +30,8 @@ mvn clean compile assembly:single
 cd ../GetClassAgent
 mvn package
 cd ../JavaAgentKill
+mvn package
+cd ../KillSomeClass
 mvn package
 ```
 
