@@ -6,6 +6,8 @@
 
 ```
 java -cp "tools.jar;conn.jar" org.example.Main target Agent.jar
+or
+java -cp "tools.jar;conn.jar org.example.Main KillSomeClass.jar EilClassName#Method"
 ```
 
 * `Agent.jar`：您可以选择使用 `GetClassAgent.jar` 或 `JavaAgentKill.jar` 或 `KillSomeClass.jar`。

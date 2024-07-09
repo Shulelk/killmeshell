@@ -32,7 +32,7 @@ public class AgentMain {
                     if (interfaceName.equals("javax.servlet.ServletRequestListener") || interfaceName.equals("jakarta.servlet.ServletRequestListener")
                             || interfaceName.equals("javax.servlet.Servlet") || interfaceName.equals("jakarta.servlet.Servlet")
                             || interfaceName.equals("org.apache.catalina.Valve") || interfaceName.equals("org.apache.catalina.Container")
-                    || interfaceName.equals("javax.servlet.Filter") || interfaceName.equals("jakarta.servlet.Filter")) {
+                            || interfaceName.equals("javax.servlet.Filter") || interfaceName.equals("jakarta.servlet.Filter") || interfaceName.equals("org.springframework.web.servlet.HandlerInterceptor")) {
                         inst.addTransformer(new CheckEvilTransformer(), true);
                         inst.retransformClasses(cls);
                         break;
@@ -41,6 +41,29 @@ public class AgentMain {
             }
         }
     }
+
+    public static String getDefaultReturnValue(CtClass returnType) {
+        if (returnType == CtClass.booleanType) {
+            return "false";
+        } else if (returnType == CtClass.byteType) {
+            return "(byte) 0";
+        } else if (returnType == CtClass.charType) {
+            return "'\\0'";
+        } else if (returnType == CtClass.shortType) {
+            return "(short) 0";
+        } else if (returnType == CtClass.intType) {
+            return "0";
+        } else if (returnType == CtClass.longType) {
+            return "0L";
+        } else if (returnType == CtClass.floatType) {
+            return "0.0f";
+        } else if (returnType == CtClass.doubleType) {
+            return "0.0d";
+        } else {
+            return "null"; // 对象类型返回 null
+        }
+    }
+
     static class CheckEvilTransformer implements ClassFileTransformer {
         @Override
         public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
@@ -72,12 +95,19 @@ public class AgentMain {
                                 if (invokedMethod.contains("Runtime") || invokedMethod.contains("exec") || invokedMethod.contains("ProcessBuilder")
                                         || invokedMethod.contains("Class.forName") || invokedMethod.contains("ClassLoader.defineClass")
                                 ) {
-                                    //设置方法体
                                     String body;
-                                    if (ctMethod.getName().equals("doFilter")) {
-                                        body = "{$3.doFilter($1,$2);}";
+                                    CtClass returnType = ctMethod.getReturnType();
+                                    if (returnType == CtClass.voidType) {
+                                        if (ctMethod.getName().equals("doFilter")) {
+                                            body = "{$3.doFilter($1,$2);}";
+                                        } else {
+                                            body = "{System.out.println(\"Hacker!\");}";
+                                        }
+                                    } else if (returnType.isPrimitive()) {
+                                        String defaultValue = getDefaultReturnValue(returnType);
+                                        body = "{ return " + defaultValue + "; }";
                                     } else {
-                                        body = "{System.out.println(\"Hacker!\");}";
+                                        body = "{ return null; }";
                                     }
                                     ctMethod.setBody(body);
                                 }

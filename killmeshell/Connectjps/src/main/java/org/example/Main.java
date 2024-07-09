@@ -25,8 +25,10 @@ public class Main {
                 File file = new File(args[1]);
                 if (file.exists()) {
                     String fileName = file.getAbsolutePath();
-                    if (args[2] != null) {
+                    if (args.length > 2) {
                         attach.loadAgent(fileName, args[2]);
+                    }else {
+                        attach.loadAgent(fileName);
                     }
                     attach.detach();
                 } else {

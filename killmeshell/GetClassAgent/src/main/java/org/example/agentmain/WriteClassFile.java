@@ -1,7 +1,10 @@
 package org.example.agentmain;
 
 
-import javassist.*;
+import javassist.CannotCompileException;
+import javassist.ClassClassPath;
+import javassist.ClassPool;
+import javassist.CtClass;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +35,7 @@ public class WriteClassFile {
                 if (interfaceName.equals("javax.servlet.ServletRequestListener") || interfaceName.equals("jakarta.servlet.ServletRequestListener")
                         || interfaceName.equals("javax.servlet.Servlet") || interfaceName.equals("jakarta.servlet.Servlet")
                         || interfaceName.equals("org.apache.catalina.Valve") || interfaceName.equals("org.apache.catalina.Container")
-                        || interfaceName.equals("javax.servlet.Filter") || interfaceName.equals("jakarta.servlet.Filter")) {
+                        || interfaceName.equals("javax.servlet.Filter") || interfaceName.equals("jakarta.servlet.Filter") || interfaceName.equals("org.springframework.web.servlet.HandlerInterceptor")) {
                     inst.addTransformer(new WriteClassTransformer(), true);
                     inst.retransformClasses(cls);
                     break;
@@ -40,7 +43,6 @@ public class WriteClassFile {
             }
         }
     }
-
     static class WriteClassTransformer implements ClassFileTransformer {
         @Override
         public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {

@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/killmeshell/Connectjps/pom.xml" />
         <option value="$PROJECT_DIR$/killmeshell/GetClassAgent/pom.xml" />
         <option value="$PROJECT_DIR$/killmeshell/JavaAgentKill/pom.xml" />
+        <option value="$PROJECT_DIR$/killmeshell/KillSomeClass/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />

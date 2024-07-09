@@ -7,5 +7,7 @@
     <file url="file://$PROJECT_DIR$/killmeshell/GetClassAgent/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/killmeshell/JavaAgentKill/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/killmeshell/JavaAgentKill/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/killmeshell/KillSomeClass/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/killmeshell/KillSomeClass/src/main/resources" charset="UTF-8" />
   </component>
 </project>
